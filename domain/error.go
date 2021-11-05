@@ -9,6 +9,8 @@ var (
 	ErrInvalidBody = errors.New("Invalid body")
 	// ErrInvalidAccountID invalid account ID
 	ErrInvalidAccountID = errors.New("Invalid Account ID")
+	// ErrInvalidOperationType invalid operation Type
+	ErrInvalidOperationType = errors.New("Invalid operation type")
 	// ErrRequiredDocNumber required document number
 	ErrRequiredDocNumber = errors.New("Required Document Number")
 	// ErrRequiredAccountID required account id

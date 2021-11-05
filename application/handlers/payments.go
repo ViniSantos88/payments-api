@@ -46,7 +46,7 @@ func getStatusCode(err error) int {
 	case domain.ErrEmptyBody, domain.ErrInvalidBody,
 		domain.ErrRequiredDocNumber, domain.ErrRequiredAccountID,
 		domain.ErrRequiredOperationType, domain.ErrRequiredAmount,
-		domain.ErrInvalidAccountID:
+		domain.ErrInvalidAccountID, domain.ErrInvalidOperationType:
 		return http.StatusBadRequest
 	case domain.ErrAccountNotFound, domain.ErrTransactionNotFound:
 		return http.StatusNotFound

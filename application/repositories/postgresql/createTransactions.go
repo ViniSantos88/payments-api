@@ -11,9 +11,9 @@ func (repo *PostgreSQLRepoImpl) CreateTransactions(transactions domain.Transacti
 		`INSERT INTO transactions
 	        (
 						account_id,
-						operationType_id,
+						operation_type_id,
 						amount,
-						eventDate
+						event_date
 					)
 	   VALUES 
         	(

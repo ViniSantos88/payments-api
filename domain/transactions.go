@@ -13,6 +13,13 @@ const (
 	ConstPagamento
 )
 
+var OperationType = map[int64]string{
+	1: "COMPRA_VISTA",
+	2: "COMPRA_PARCELADO",
+	3: "SAQUE",
+	4: "PAGAMENTO",
+}
+
 type Transactions struct {
 	TransactionID   int64     `json:"transaction_id," db:"transaction_id"`
 	AccountID       int64     `json:"account_id,omitempty" db:"account_id"`
@@ -38,6 +45,11 @@ func ValidateTransaction(r *http.Request) (*Transactions, error) {
 
 	if transaction.OperationTypeID == 0 {
 		return nil, ErrRequiredOperationType
+	}
+
+	_, exists := OperationType[transaction.OperationTypeID]
+	if !exists {
+		return nil, ErrInvalidOperationType
 	}
 
 	if transaction.Amount == 0 {

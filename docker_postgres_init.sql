@@ -20,7 +20,9 @@ CREATE TABLE IF NOT EXISTS transactions (
       REFERENCES operations_types (operation_type_id)    
 );
 
-insert into operations_types (operation_type_id, description0) VALUES (1,"COMPRA A VISTA");
-insert into operations_types (operation_type_id, description0) VALUES (2,"COMPRA PARCELADA");
-insert into operations_types (operation_type_id, description0) VALUES (3,"SAQUE");
-insert into operations_types (operation_type_id, description0) VALUES (4,"PAGAMENTO");
+insert into operations_types (operation_type_id, description0) VALUES (1,'COMPRA A VISTA');
+insert into operations_types (operation_type_id, description0) VALUES (2,'COMPRA PARCELADA');
+insert into operations_types (operation_type_id, description0) VALUES (3,'SAQUE');
+insert into operations_types (operation_type_id, description0) VALUES (4,'PAGAMENTO');
+
+commit;

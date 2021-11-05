@@ -124,6 +124,25 @@ func TestTransactionDomain(t *testing.T) {
 		require.Equal(t, errMsg.Error(), err.Error(), "Validation message is wrong")
 	})
 
+	t.Run("Test invalid operationType", func(t *testing.T) {
+		errMsg := domain.ErrInvalidOperationType
+
+		jsonRequestBody := `{
+			"account_id": 213452,
+			"operation_type_id": 5 ,
+			"amount": 120.90
+		}`
+
+		// create a new reader with that JSON
+		r := ioutil.NopCloser(bytes.NewReader([]byte(jsonRequestBody)))
+		httpRequest := &http.Request{
+			Body: r,
+		}
+		_, err := domain.ValidateTransaction(httpRequest)
+
+		require.Equal(t, errMsg.Error(), err.Error(), "Validation message is wrong")
+	})
+
 	t.Run("Test amount by operationType Compra a Vista", func(t *testing.T) {
 		amount := -120.90
 		jsonRequestBody := `{
