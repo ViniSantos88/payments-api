@@ -1,0 +1,148 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  Accounts:
+    properties:
+      account_id:
+        format: int64
+        type: integer
+        x-go-name: AccountID
+      document_number:
+        type: string
+        x-go-name: DocumentNumber
+    type: object
+    x-go-package: github.com/ViniSantos88/payments-api/domain
+  CreateResponse:
+    description: CreateResponse is the response for account or transaction creation
+    properties:
+      ID:
+        format: int64
+        type: integer
+    type: object
+    x-go-package: github.com/ViniSantos88/payments-api/application/handlers
+info:
+  description: |-
+    Payments API
+
+    Schemes: [http, https]
+  title: Payments.
+  version: 1.0.0
+paths:
+  /accounts:
+    post:
+      description: Creation of bank account
+      operationId: createAccount
+      parameters:
+      - description: Data structure representing the account
+        in: body
+        name: Body
+        required: true
+        schema:
+          properties:
+            document_number:
+              type: string
+              x-go-name: DocumentNumber
+          type: object
+      responses:
+        "201":
+          $ref: '#/responses/createResponse'
+        "400":
+          $ref: '#/responses/errorValidation'
+        "404":
+          $ref: '#/responses/errorNotFound'
+        "500":
+          description: ' Internal Server Error'
+      tags:
+      - createAccount
+  /accounts/{accountId}:
+    get:
+      description: Get bank account detail
+      operationId: getAccount
+      parameters:
+      - description: Data structure representing the account ID
+        in: path
+        name: accountId
+        required: true
+        type: string
+        x-go-name: AcccountID
+      responses:
+        "200":
+          $ref: '#/responses/accountResponse'
+        "400":
+          $ref: '#/responses/errorValidation'
+        "404":
+          $ref: '#/responses/errorNotFound'
+        "500":
+          description: ' Internal Server Error'
+      tags:
+      - getAccount
+  /transacations:
+    post:
+      description: Creation of payment method transactions
+      operationId: createTransactions
+      parameters:
+      - description: Data structure representing the transaction
+        in: body
+        name: Body
+        required: true
+        schema:
+          properties:
+            account_id:
+              format: int64
+              type: integer
+              x-go-name: AccountID
+            amount:
+              format: double
+              type: number
+              x-go-name: Amount
+            operation_type_id:
+              format: int64
+              type: integer
+              x-go-name: OperationTypeID
+          type: object
+      responses:
+        "201":
+          $ref: '#/responses/createResponse'
+        "400":
+          $ref: '#/responses/errorValidation'
+        "404":
+          $ref: '#/responses/errorNotFound'
+        "500":
+          description: ' Internal Server Error'
+      tags:
+      - createTransactions
+produces:
+- application/json
+responses:
+  accountResponse:
+    description: Data structure representing the account
+    schema:
+      properties:
+        data:
+          $ref: '#/definitions/Accounts'
+      type: object
+  createResponse:
+    description: Data structure representing the id
+    schema:
+      properties:
+        data:
+          $ref: '#/definitions/CreateResponse'
+      type: object
+  errorNotFound:
+    description: Not Found
+    schema:
+      properties:
+        message:
+          type: string
+          x-go-name: Message
+      type: object
+  errorValidation:
+    description: Bad Request
+    schema:
+      properties:
+        message:
+          type: string
+          x-go-name: Message
+      type: object
+swagger: "2.0"

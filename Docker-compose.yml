@@ -1,0 +1,59 @@
+version: '3.6'
+services:
+  app:
+    container_name: payments
+    build: .
+    ports: 
+      - 8080:8080 
+    restart: on-failure
+    volumes:
+      - api:/usr/src/app/
+    environment:
+      PSQL_DB_HOST: postgres                      
+      PSQL_DB_USER: admin
+      PSQL_DB_PASSWORD: 1234
+      PSQL_DB_NAME: payments
+      PSQL_DB_PORT: 5432   
+    depends_on:
+      - postgres          
+    networks:
+      - fullstack
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_payments
+    restart: always
+    environment:
+      - POSTGRES_USER=${PSQL_DB_USER}  
+      - POSTGRES_PASSWORD=${PSQL_DB_PASSWORD}
+      - POSTGRES_DB=${PSQL_DB_NAME}
+      - DATABASE_HOST=${PSQL_DB_HOST} 
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    networks:
+      - fullstack  
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - fullstack
+    restart: unless-stopped                  
+
+volumes:
+  api:
+
+# Networks to be created to facilitate communication between containers
+networks:
+  fullstack:
+    driver: bridge    
