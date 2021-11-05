@@ -13,14 +13,6 @@ definitions:
         x-go-name: DocumentNumber
     type: object
     x-go-package: github.com/ViniSantos88/payments-api/domain
-  CreateResponse:
-    description: CreateResponse is the response for account or transaction creation
-    properties:
-      ID:
-        format: int64
-        type: integer
-    type: object
-    x-go-package: github.com/ViniSantos88/payments-api/application/handlers
 info:
   description: |-
     Payments API
@@ -46,7 +38,7 @@ paths:
           type: object
       responses:
         "201":
-          $ref: '#/responses/createResponse'
+          $ref: '#/responses/accountIDResponse'
         "400":
           $ref: '#/responses/errorValidation'
         "404":
@@ -103,7 +95,7 @@ paths:
           type: object
       responses:
         "201":
-          $ref: '#/responses/createResponse'
+          $ref: '#/responses/transactionIDResponse'
         "400":
           $ref: '#/responses/errorValidation'
         "404":
@@ -115,19 +107,21 @@ paths:
 produces:
 - application/json
 responses:
+  accountIDResponse:
+    description: Data structure representing the id
+    schema:
+      properties:
+        account_id:
+          format: int64
+          type: integer
+          x-go-name: AccountID
+      type: object
   accountResponse:
     description: Data structure representing the account
     schema:
       properties:
         data:
           $ref: '#/definitions/Accounts'
-      type: object
-  createResponse:
-    description: Data structure representing the id
-    schema:
-      properties:
-        data:
-          $ref: '#/definitions/CreateResponse'
       type: object
   errorNotFound:
     description: Not Found
@@ -144,5 +138,14 @@ responses:
         message:
           type: string
           x-go-name: Message
+      type: object
+  transactionIDResponse:
+    description: Data structure representing the id
+    schema:
+      properties:
+        transaction_id:
+          format: int64
+          type: integer
+          x-go-name: TransactionID
       type: object
 swagger: "2.0"

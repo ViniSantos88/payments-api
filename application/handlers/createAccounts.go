@@ -11,7 +11,7 @@ import (
 // Creation of bank account
 //
 // responses:
-//	201: createResponse
+//	201: accountIDResponse
 //  400: errorValidation
 //  404: errorNotFound
 //  500: description: Internal Server Error
@@ -27,21 +27,16 @@ func (pc *PaymentsCtrlImpl) CreateAccounts(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	ID, err := pc.PaymentsService.CreateAccounts(*account)
+	response := &domain.Accounts{}
+	response.AccountID, err = pc.PaymentsService.CreateAccounts(*account)
 	if err != nil {
 		w.WriteHeader(getStatusCode(err))
 		json.NewEncoder(w).Encode(&GenericResponse{Message: err.Error()})
 		return
 	}
 
-	resp := GenericResponse{
-		Data: CreateResponse{
-			ID: ID,
-		},
-	}
-
 	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(resp); err != nil {
+	if err := json.NewEncoder(w).Encode(response); err != nil {
 		panic(err)
 	}
 }

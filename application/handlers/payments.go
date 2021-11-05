@@ -57,17 +57,7 @@ func getStatusCode(err error) int {
 	}
 }
 
-//CreateResponse is the response for account or transaction creation
-type CreateResponse struct {
-	ID int64 `json:"ID"`
-}
-
 // Generic Response for Errors
 type GenericResponse struct {
-	Message string        `json:"message,omitempty"`
-	Data    DataInterface `json:"data,omitempty"`
-}
-
-// DataInterface returns the data related to the request
-type DataInterface interface {
+	Message string `json:"message,omitempty"`
 }

@@ -61,15 +61,12 @@ func TestCreateAccountsFunction(t *testing.T) {
 		// Check the status code is what we expect
 		require.Equal(t, http.StatusCreated, rr.Code, "Invalid Status code: JSON %s", rr.Body.String())
 
-		var data handlers.CreateResponse
-		resp := &handlers.GenericResponse{
-			Data: &data,
-		}
+		var data domain.Accounts
 
-		err = json.NewDecoder(rr.Body).Decode(&resp)
+		err = json.NewDecoder(rr.Body).Decode(&data.AccountID)
 		testutil.ValidateError(t, err)
 
-		require.Equal(t, mockID, data.ID, "Account ID is wrong")
+		require.Equal(t, mockID, data.AccountID, "Account ID is wrong")
 	})
 
 	t.Run("Test Invalid JSON when create", func(t *testing.T) {
@@ -92,10 +89,7 @@ func TestCreateAccountsFunction(t *testing.T) {
 		// Check the status code is what we expect
 		require.Equal(t, http.StatusBadRequest, rr.Code, "Invalid Status code: JSON %s", rr.Body.String())
 
-		var data domain.Accounts
-		resp := &handlers.GenericResponse{
-			Data: &data,
-		}
+		resp := &handlers.GenericResponse{}
 
 		err = json.NewDecoder(rr.Body).Decode(&resp)
 		testutil.ValidateError(t, err)
@@ -123,10 +117,7 @@ func TestCreateAccountsFunction(t *testing.T) {
 		// Check the status code is what we expect
 		require.Equal(t, http.StatusBadRequest, rr.Code, "Invalid Status code: JSON %s", rr.Body.String())
 
-		var data domain.Accounts
-		resp := &handlers.GenericResponse{
-			Data: &data,
-		}
+		resp := &handlers.GenericResponse{}
 
 		err = json.NewDecoder(rr.Body).Decode(&resp)
 		testutil.ValidateError(t, err)
@@ -157,10 +148,7 @@ func TestCreateAccountsFunction(t *testing.T) {
 		// Check the status code is what we expect
 		require.Equal(t, http.StatusInternalServerError, rr.Code, "Invalid Status code: JSON %s", rr.Body.String())
 
-		var data domain.Accounts
-		resp := &handlers.GenericResponse{
-			Data: &data,
-		}
+		resp := &handlers.GenericResponse{}
 
 		err = json.NewDecoder(rr.Body).Decode(&resp)
 		testutil.ValidateError(t, err)

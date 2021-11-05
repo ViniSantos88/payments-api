@@ -18,7 +18,6 @@
 package docs
 
 import (
-	"github.com/ViniSantos88/payments-api/application/handlers"
 	"github.com/ViniSantos88/payments-api/domain"
 )
 
@@ -46,12 +45,12 @@ type errorValidationWrapper struct {
 }
 
 // Data structure representing the id
-// swagger:response createResponse
-type createResponseWrapper struct {
+// swagger:response accountIDResponse
+type createAccountIDResponseWrapper struct {
 	// Return with id
 	// in: body
 	Body struct {
-		Data handlers.CreateResponse `json:"data,omitempty"`
+		AccountID int64 `json:"account_id"`
 	}
 }
 
@@ -81,6 +80,16 @@ type accountIDParamsWrapper struct {
 	// in: path
 	// required: true
 	AcccountID string `json:"accountId"`
+}
+
+// Data structure representing the id
+// swagger:response transactionIDResponse
+type createTransactionIDResponseWrapper struct {
+	// Return with id
+	// in: body
+	Body struct {
+		TransactionID int64 `json:"transaction_id"`
+	}
 }
 
 // swagger:parameters transactionRequest createTransactions

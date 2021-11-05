@@ -11,7 +11,7 @@ import (
 // Creation of payment method transactions
 //
 // responses:
-//	201: createResponse
+//	201: transactionIDResponse
 //  400: errorValidation
 //  404: errorNotFound
 //  500: description: Internal Server Error
@@ -27,21 +27,16 @@ func (pc *PaymentsCtrlImpl) CreateTransactions(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	ID, err := pc.PaymentsService.CreateTransactions(*transaction)
+	response := &domain.Transactions{}
+	response.TransactionID, err = pc.PaymentsService.CreateTransactions(*transaction)
 	if err != nil {
 		w.WriteHeader(getStatusCode(err))
 		json.NewEncoder(w).Encode(&GenericResponse{Message: err.Error()})
 		return
 	}
 
-	resp := GenericResponse{
-		Data: CreateResponse{
-			ID: ID,
-		},
-	}
-
 	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(resp); err != nil {
+	if err := json.NewEncoder(w).Encode(response); err != nil {
 		panic(err)
 	}
 }

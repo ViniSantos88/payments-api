@@ -34,10 +34,13 @@ h1. DEVELOPMENT
       mockgen -source=application/services/payments.go -destination=__test__/mocks/services/payments_mock.go -package=servicesmocks
 
 
-HOW TO ANALYZE WHAT IS MISSING FROM THE TEST COVERAGE
+HOW TO ANALYZE WHAT IS MISSING FROM THE TEST COVERAGE 
     - t="/tmp/go-cover.$$.tmp"
     - go test ./... -coverprofile=$t $@ && go tool cover -html=$t && unlink $t
 
+HOW TO GENERATE AND TO VALIDATE THE SWAGGER
+    - swagger generate spec -o ./swagger.yaml --scan-models
+    - swagger validate ./swagger.yaml
 
 HOW TO RUN UNIT TEST
 - Run
