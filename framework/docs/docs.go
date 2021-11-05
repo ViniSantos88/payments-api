@@ -68,7 +68,7 @@ type AccountParamsWrapper struct {
 // Data structure representing the account
 // swagger:response accountResponse
 type accountResponseWrapper struct {
-	// Return with badge id
+	// Return with account id
 	// in: body
 	Body struct {
 		Data domain.Accounts `json:"data"`
